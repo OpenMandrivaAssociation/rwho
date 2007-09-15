@@ -8,7 +8,7 @@ Source: ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/netkit-rwho-%{version
 Source1: rwhod.init
 Url: ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/
 
-#FIX for http://www.mandrakesoft.com/security/advisories?name=MDKSA-2005:039
+#FIX for http://www.mandriva.com/security/advisories?name=MDKSA-2005:039
 Patch5: rwho-0.17-CAN-2004-1180.patch.bz2
 #Patch0: netkit-rwho-0.15-alpha.patch.bz2
 Patch1: netkit-rwho-0.17-bug22014.patch.bz2
