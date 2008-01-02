@@ -15,6 +15,7 @@ Patch1: netkit-rwho-0.17-bug22014.patch.bz2
 Patch2: rwho-0.17-fixbcast.patch.bz2
 Patch3: rwho-0.17-fixhostname.patch.bz2
 
+Buildroot: %{_tmppath}/%{name}-%{version}-buildroot
 Requires(pre): rpm-helper
 
 %description
