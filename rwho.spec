@@ -1,4 +1,4 @@
-Summary: Displays who is logged in to local network machines
+Summary: Logged in to local network machines
 Name: rwho
 Version: 0.17
 Release: %mkrel 13
