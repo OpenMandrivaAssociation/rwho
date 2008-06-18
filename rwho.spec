@@ -1,7 +1,7 @@
 Summary: Logged in to local network machines
 Name: rwho
 Version: 0.17
-Release: %mkrel 14
+Release: %mkrel 15
 License: BSD
 Group: Monitoring
 Source: ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/netkit-rwho-%{version}.tar.bz2
