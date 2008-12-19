@@ -1,7 +1,7 @@
 Summary: Logged in to local network machines
 Name: rwho
 Version: 0.17
-Release: %mkrel 15
+Release: %mkrel 16
 License: BSD
 Group: Monitoring
 Source: ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/netkit-rwho-%{version}.tar.bz2
@@ -9,11 +9,11 @@ Source1: rwhod.init
 Url: ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/
 
 #FIX for http://www.mandriva.com/security/advisories?name=MDKSA-2005:039
-Patch5: rwho-0.17-CAN-2004-1180.patch.bz2
-#Patch0: netkit-rwho-0.15-alpha.patch.bz2
-Patch1: netkit-rwho-0.17-bug22014.patch.bz2
-Patch2: rwho-0.17-fixbcast.patch.bz2
-Patch3: rwho-0.17-fixhostname.patch.bz2
+Patch5: rwho-0.17-CAN-2004-1180.patch
+#Patch0: netkit-rwho-0.15-alpha.patch
+Patch1: netkit-rwho-0.17-bug22014.patch
+Patch2: rwho-0.17-fixbcast.patch
+Patch3: rwho-0.17-fixhostname.patch
 
 Buildroot: %{_tmppath}/%{name}-%{version}-buildroot
 Requires(pre): rpm-helper
@@ -34,7 +34,7 @@ are logged in to your local network.
 # and we don't support alpha anyways
 #%patch0 -p1 -b .alpha
 %patch1 -p1 -b .bug22014
-%patch2 -p1 -b .fixbcast
+%patch2 -p0 -b .fixbcast
 %patch3 -p1 -b .fixhostname
 
 %build
