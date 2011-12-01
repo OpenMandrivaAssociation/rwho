@@ -45,21 +45,21 @@ make RPM_OPT_FLAGS="$RPM_OPT_FLAGS"
 make RPM_OPT_FLAGS="$RPM_OPT_FLAGS" -C ruptime
 
 %install
-rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/%{_bindir}
-mkdir -p $RPM_BUILD_ROOT%{_sbindir}
-mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man{1,8}
-mkdir -p $RPM_BUILD_ROOT%{_initrddir}
-mkdir -p $RPM_BUILD_ROOT/var/spool/rwho
+rm -rf %{buildroot}
+mkdir -p %{buildroot}/%{_bindir}
+mkdir -p %{buildroot}%{_sbindir}
+mkdir -p %{buildroot}/%{_mandir}/man{1,8}
+mkdir -p %{buildroot}%{_initrddir}
+mkdir -p %{buildroot}/var/spool/rwho
 
-make INSTALLROOT=$RPM_BUILD_ROOT MANDIR=%{_mandir} install 
-make INSTALLROOT=$RPM_BUILD_ROOT install -C ruptime MANDIR=%{_mandir}
+make INSTALLROOT=%{buildroot} MANDIR=%{_mandir} install 
+make INSTALLROOT=%{buildroot} install -C ruptime MANDIR=%{_mandir}
 
-install -m 755 %SOURCE1 $RPM_BUILD_ROOT%{_initrddir}/rwhod
+install -m 755 %SOURCE1 %{buildroot}%{_initrddir}/rwhod
 
-perl -pi -e "s|/etc/rc.d/init.d|%{_initrddir}|" $RPM_BUILD_ROOT%{_initrddir}/*
+perl -pi -e "s|/etc/rc.d/init.d|%{_initrddir}|" %{buildroot}%{_initrddir}/*
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %post
 %_post_service rwhod
