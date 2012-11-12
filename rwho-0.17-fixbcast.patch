@@ -1,0 +1,14 @@
+--- rwhod/rwhod.c	2008-12-19 16:17:06.000000000 +0100
++++ rwhod/rwhod.c.oden	2008-12-19 16:17:20.000000000 +0100
+@@ -692,6 +692,11 @@ configure(int s)
+ 			continue;
+ 		}
+ 		strcpy(np->n_name, ifr->ifr_name);
++		if (strchr(np->n_name, ':')) {
++		  /* virtual interface found */
++		  free((char *) np);
++		  continue;
++		}
+ 		np->n_addrlen = sizeof (ifr->ifr_addr);
+ 
+ 		np->n_dstaddr = malloc(np->n_addrlen);
