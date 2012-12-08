@@ -1,0 +1,55 @@
+diff -urN netkit-rwho-0.17/ruptime/Makefile netkit-rwho-0.17-patched/ruptime/Makefile
+--- netkit-rwho-0.17/ruptime/Makefile	1999-08-01 17:00:13.000000000 +1100
++++ netkit-rwho-0.17-patched/ruptime/Makefile	2012-10-20 02:53:55.607687960 +1100
+@@ -3,13 +3,11 @@
+ include ../MCONFIG
+ include ../MRULES
+ 
+-CFLAGS += -I../include
+-
+ ruptime: ruptime.o
+-	$(CC) $(LDFLAGS) $^ $(LIBS) -o $@
++	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LIBS) -o $@
+ 
+ install: ruptime
+-	install -s -m$(BINMODE) ruptime $(INSTALLROOT)$(BINDIR)
++	install -m$(BINMODE) ruptime $(INSTALLROOT)$(BINDIR)
+ 	install -m$(MANMODE) ruptime.1 $(INSTALLROOT)$(MANDIR)/man1/
+ 
+ clean:
+diff -urN netkit-rwho-0.17/rwho/Makefile netkit-rwho-0.17-patched/rwho/Makefile
+--- netkit-rwho-0.17/rwho/Makefile	1999-12-13 04:05:05.000000000 +1000
++++ netkit-rwho-0.17-patched/rwho/Makefile	2012-10-20 02:50:06.662668187 +1100
+@@ -6,12 +6,12 @@
+ CFLAGS += -I../include
+ 
+ rwho: rwho.o
+-	$(CC) $(LDFLAGS) $^ $(LIBS) -o $@
++	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LIBS) -o $@
+ 
+ rwho.o: ../version.h
+ 
+ install: rwho
+-	install -s -m$(BINMODE) rwho $(INSTALLROOT)$(BINDIR)
++	install -m$(BINMODE) rwho $(INSTALLROOT)$(BINDIR)
+ 	install -m$(MANMODE) rwho.1 $(INSTALLROOT)$(MANDIR)/man1/
+ 
+ clean:
+diff -urN netkit-rwho-0.17/rwhod/Makefile netkit-rwho-0.17-patched/rwhod/Makefile
+--- netkit-rwho-0.17/rwhod/Makefile	1999-08-01 17:00:13.000000000 +1100
++++ netkit-rwho-0.17-patched/rwhod/Makefile	2012-10-20 02:50:21.213668885 +1100
+@@ -7,12 +7,12 @@
+ OBJS = rwhod.o daemon.o
+ 
+ rwhod: $(OBJS)
+-	$(CC) $(LDFLAGS) $^ $(LIBS) -o $@
++	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LIBS) -o $@
+ 
+ $(OBJS): daemon.h
+ 
+ install: rwhod
+-	install -s -m$(DAEMONMODE) rwhod $(INSTALLROOT)$(SBINDIR)
++	install -m$(DAEMONMODE) rwhod $(INSTALLROOT)$(SBINDIR)
+ 	install -m$(MANMODE) rwhod.8 $(INSTALLROOT)$(MANDIR)/man8/
+ 
+ clean:

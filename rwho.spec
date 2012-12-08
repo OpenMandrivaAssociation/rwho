@@ -1,22 +1,19 @@
-Summary: Logged in to local network machines
-Name: rwho
-Version: 0.17
-Release: %mkrel 20
-License: BSD
-Group: Monitoring
-Source: ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/netkit-rwho-%{version}.tar.bz2
-Source1: rwhod.init
-Url: ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/
-
+Summary:	Logged in to local network machines
+Name:		rwho
+Version:	0.17
+Release:	21
+License:	BSD
+Group:		Monitoring
+Url:		ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/
+Source:		ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/netkit-rwho-%{version}.tar.bz2
+Source1:	rwhod.init
 #FIX for http://www.mandriva.com/security/advisories?name=MDKSA-2005:039
-Patch5: rwho-0.17-CAN-2004-1180.patch
-#Patch0: netkit-rwho-0.15-alpha.patch
-Patch1: netkit-rwho-0.17-bug22014.patch
-Patch2: rwho-0.17-fixbcast.patch
-Patch3: rwho-0.17-fixhostname.patch
+Patch0:		netkit-rwho-0.17-makefiles.patch
+Patch2:		rwho-0.17-fixbcast.patch
+Patch3:		rwho-0.17-fixhostname.patch
+Patch5:		rwho-0.17-CAN-2004-1180.patch
 
-Buildroot: %{_tmppath}/%{name}-%{version}-buildroot
-Requires(pre): rpm-helper
+Requires(pre):	rpm-helper
 
 %description
 The rwho command displays output similar to the output of the who
@@ -32,20 +29,18 @@ are logged in to your local network.
 %patch5 -p1 -b .can-2004-118
 # (02/11/05 - vdanen) drop due to it being too intrusive against the security patch
 # and we don't support alpha anyways
-#%patch0 -p1 -b .alpha
-%patch1 -p1 -b .bug22014
+%patch0 -p1 -b .makefiles
 %patch2 -p0 -b .fixbcast
 %patch3 -p1 -b .fixhostname
 
 %build
 %serverbuild
-CFLAGS="$RPM_OPT_FLAGS" ./configure --with-c-compiler=gcc
+CFLAGS="%{optflags}" ./configure --with-c-compiler=gcc
 
-make RPM_OPT_FLAGS="$RPM_OPT_FLAGS"
-make RPM_OPT_FLAGS="$RPM_OPT_FLAGS" -C ruptime
+make RPM_OPT_FLAGS="%{optflags}"
+make RPM_OPT_FLAGS="%{optflags}" -C ruptime
 
 %install
-rm -rf %{buildroot}
 mkdir -p %{buildroot}/%{_bindir}
 mkdir -p %{buildroot}%{_sbindir}
 mkdir -p %{buildroot}/%{_mandir}/man{1,8}
@@ -55,11 +50,9 @@ mkdir -p %{buildroot}/var/spool/rwho
 make INSTALLROOT=%{buildroot} MANDIR=%{_mandir} install 
 make INSTALLROOT=%{buildroot} install -C ruptime MANDIR=%{_mandir}
 
-install -m 755 %SOURCE1 %{buildroot}%{_initrddir}/rwhod
+install -m 755 %{SOURCE1} %{buildroot}%{_initrddir}/rwhod
 
 perl -pi -e "s|/etc/rc.d/init.d|%{_initrddir}|" %{buildroot}%{_initrddir}/*
-%clean
-rm -rf %{buildroot}
 
 %post
 %_post_service rwhod
@@ -68,7 +61,6 @@ rm -rf %{buildroot}
 %_preun_service rwhod
 
 %files
-%defattr(-,root,root)
 %{_bindir}/ruptime
 %{_mandir}/man1/ruptime.1*
 %{_bindir}/rwho
@@ -77,3 +69,4 @@ rm -rf %{buildroot}
 %{_mandir}/man8/rwhod.8*
 %attr(0755,daemon,daemon) /var/spool/rwho
 %config(noreplace) %{_initrddir}/rwhod
+
