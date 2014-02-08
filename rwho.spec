@@ -1,7 +1,7 @@
 Summary:	Logged in to local network machines
 Name:		rwho
 Version:	0.17
-Release:	21
+Release:	22
 License:	BSD
 Group:		Monitoring
 Url:		ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/
