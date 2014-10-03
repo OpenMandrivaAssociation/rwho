@@ -1,19 +1,17 @@
 Summary:	Logged in to local network machines
 Name:		rwho
 Version:	0.17
-Release:	27
+Release:	28
 License:	BSD
 Group:		Monitoring
 Url:		ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/
 Source:		ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/netkit-rwho-%{version}.tar.bz2
-Source1:	rwhod.init
+Source1:	rwhod.service
 #FIX for http://www.mandriva.com/security/advisories?name=MDKSA-2005:039
 Patch0:		netkit-rwho-0.17-makefiles.patch
 Patch2:		rwho-0.17-fixbcast.patch
 Patch3:		rwho-0.17-fixhostname.patch
 Patch5:		rwho-0.17-CAN-2004-1180.patch
-
-Requires(pre):	rpm-helper
 
 %description
 The rwho command displays output similar to the output of the who
@@ -44,21 +42,22 @@ make RPM_OPT_FLAGS="%{optflags}" -C ruptime
 mkdir -p %{buildroot}/%{_bindir}
 mkdir -p %{buildroot}%{_sbindir}
 mkdir -p %{buildroot}/%{_mandir}/man{1,8}
-mkdir -p %{buildroot}%{_initrddir}
+mkdir -p %{buildroot}%{_unitdir}
 mkdir -p %{buildroot}/var/spool/rwho
 
 make INSTALLROOT=%{buildroot} MANDIR=%{_mandir} install 
 make INSTALLROOT=%{buildroot} install -C ruptime MANDIR=%{_mandir}
 
-install -m 755 %{SOURCE1} %{buildroot}%{_initrddir}/rwhod
-
-perl -pi -e "s|/etc/rc.d/init.d|%{_initrddir}|" %{buildroot}%{_initrddir}/*
+install -m 755 %{SOURCE1} %{buildroot}%{_unitdir}/rwhod.service
 
 %post
-%_post_service rwhod
+%systemd_post rwhod.service
 
 %preun
-%_preun_service rwhod
+%systemd_preun rwhod.service
+
+%postun
+%systemd_postun_with_restart rwhod.service
 
 %files
 %{_bindir}/ruptime
@@ -68,5 +67,5 @@ perl -pi -e "s|/etc/rc.d/init.d|%{_initrddir}|" %{buildroot}%{_initrddir}/*
 %{_sbindir}/rwhod
 %{_mandir}/man8/rwhod.8*
 %attr(0755,daemon,daemon) /var/spool/rwho
-%config(noreplace) %{_initrddir}/rwhod
+%{_unitdir}/rwhod*
 
