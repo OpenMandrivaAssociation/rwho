@@ -13,6 +13,7 @@ Patch2:		rwho-0.17-fixbcast.patch
 Patch3:		rwho-0.17-fixhostname.patch
 Patch5:		rwho-0.17-CAN-2004-1180.patch
 
+BuildRequires:	make
 %description
 The rwho command displays output similar to the output of the who
 command (it shows who is logged in) for all machines on the local
